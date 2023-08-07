@@ -7,6 +7,6 @@ This is the most important part of the workshop. We need to clean up all resourc
 Remove all resources that were created during the workshop by running the following command:
 
 ```powershell
-az group delete --name iac-ws6-rg --yes
+az group delete --name iac-ws6-rg --yes --no-wait
 ```
 

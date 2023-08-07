@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # mkdocs build output folder
 site
+
+# bicep parameters file(s)
+main.parameters.json
