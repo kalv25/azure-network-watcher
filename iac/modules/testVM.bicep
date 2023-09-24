@@ -12,7 +12,7 @@ param adminUsername string
 param adminPassword string
 
 
-resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: '${vmName}-nic'
   location: location
   properties: {
