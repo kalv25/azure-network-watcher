@@ -1,13 +1,13 @@
-param parSpokeVNetName string
-param parSpokeVnetId string
-param parHubVNetName string
+param parFromVNetName string
+param parFromVnetId string
+param parToVNetName string
 
 resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {
-  name: parHubVNetName  
+  name: parToVNetName  
 }
 
 resource resPeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2023-04-01' = {
-  name: '${parHubVNetName}-${parSpokeVNetName}'
+  name: '${parToVNetName}-${parFromVNetName}'
   parent: resHubVnet
   properties: {
     allowVirtualNetworkAccess: true
@@ -15,7 +15,7 @@ resource resPeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@20
     allowGatewayTransit: false
     useRemoteGateways: false
     remoteVirtualNetwork: {
-      id: parSpokeVnetId
+      id: parFromVnetId
     }
   }
 }

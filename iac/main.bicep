@@ -80,19 +80,38 @@ module modLinkSpoke1ToHub 'modules/peeringToHub.bicep' = {
   scope: resHubResourceGroup
   name: 'link-spoke1-to-hub'
   params: {
-    parHubVNetName: modHub.outputs.outVnetName
-    parSpokeVNetName: modSpoke1.outputs.outVnetName
-    parSpokeVnetId: modSpoke1.outputs.outVnetId
+    parToVNetName: modHub.outputs.outVnetName
+    parFromVNetName: modSpoke1.outputs.outVnetName
+    parFromVnetId: modSpoke1.outputs.outVnetId
   }
 }
+module modHubToSpoke1 'modules/peeringToHub.bicep' = {
+  scope: resSpoke1ResourceGroup
+  name: 'link-hub-to-spoke1'
+  params: {
+    parToVNetName: modSpoke1.outputs.outVnetName
+    parFromVNetName: modHub.outputs.outVnetName
+    parFromVnetId: modHub.outputs.outVnetId
+  }
+}
+
 
 module modLinkSpoke2ToHub 'modules/peeringToHub.bicep' = {
   scope: resHubResourceGroup
   name: 'link-spoke2-to-hub'
   params: {
-    parHubVNetName: modHub.outputs.outVnetName
-    parSpokeVNetName: modSpoke2.outputs.outVnetName
-    parSpokeVnetId: modSpoke2.outputs.outVnetId
+    parToVNetName: modHub.outputs.outVnetName
+    parFromVNetName: modSpoke2.outputs.outVnetName
+    parFromVnetId: modSpoke2.outputs.outVnetId
+  }
+}
+module modHubToSpoke2 'modules/peeringToHub.bicep' = {
+  scope: resSpoke2ResourceGroup
+  name: 'link-hub-to-spoke2'
+  params: {
+    parToVNetName: modSpoke2.outputs.outVnetName
+    parFromVNetName: modHub.outputs.outVnetName
+    parFromVnetId: modHub.outputs.outVnetId
   }
 }
 
