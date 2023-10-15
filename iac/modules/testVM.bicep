@@ -12,7 +12,7 @@ param parAdminUsername string
 param parAdminPassword string
 
 
-resource resNic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource resNic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: '${parVmName}-nic'
   location: parLocation
   properties: {
@@ -30,7 +30,7 @@ resource resNic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource resVm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   name: parVmName
   location: parLocation
   properties: {
@@ -71,7 +71,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   }
 
   // Install the Azure Monitor Agent
-  resource ama 'extensions@2021-11-01' = {
+  resource resAma 'extensions@2021-11-01' = {
     name: 'AzureMonitorWindowsAgent'
     location: parLocation
     properties: {
