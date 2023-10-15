@@ -1,16 +1,12 @@
-param location string
-param prefix string
-param vnetAddressPrefix string
+param parLocation string
+param parPrefix string
+param parVnetAddressPrefix string
+param parBastionSubnetAddressPrefix string
+param parWorkloadSubnetAddressPrefix string
 
-var virtualNetworkName = '${prefix}-hub-vnet'
-resource workloadNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
-  name: '${virtualNetworkName}-workload-nsg'
-  location: location
-}
-
-resource bastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
-  name: '${virtualNetworkName}-bastion-nsg'
-  location: location
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+  name: '${varVirtualNetworkName}-bastion-nsg'
+  location: parLocation
   properties: {
     securityRules: [
       {
@@ -156,39 +152,80 @@ resource bastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   }        
 }
 
-resource vnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
-  name: virtualNetworkName
-  location: location
+var varVirtualNetworkName = '${parPrefix}-hub-vnet'
+resource resWorkloadNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+  name: '${varVirtualNetworkName}-workload-nsg'
+  location: parLocation
+}
+
+resource resVnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
+  name: varVirtualNetworkName
+  location: parLocation
   properties: {
     addressSpace: {
       addressPrefixes: [
-        '${vnetAddressPrefix}.0.0/25'
+        parVnetAddressPrefix
       ]
     }
     subnets: [
       {
         name: 'AzureBastionSubnet'
         properties: {        
-          addressPrefix: '${vnetAddressPrefix}.0.0/26'
+          addressPrefix: parBastionSubnetAddressPrefix
           networkSecurityGroup: {
-            id: bastionNsg.id
+            id: resBastionNsg.id
           }
         }
       }
       {
         name: 'workload-snet'
         properties: {        
-          addressPrefix: '${vnetAddressPrefix}.0.64/26'
+          addressPrefix: parWorkloadSubnetAddressPrefix
           networkSecurityGroup: {
-            id: workloadNsg.id
+            id: resWorkloadNsg.id
           }
         }
-      }
+      }      
     ] 
     enableDdosProtection: false
     enableVmProtection: false
   }
 }
 
-output name string = vnet.name
-output id string = vnet.id
+var varBastionHostName = '${parPrefix}-bas'
+var varBastionPublicIpAddressName = '${varBastionHostName}-pip'
+
+resource resBastionPublicIpAddress 'Microsoft.Network/publicIPAddresses@2023-04-01' = {
+  name: varBastionPublicIpAddressName
+  location: parLocation
+  sku: {
+    name: 'Standard'
+  }
+  properties: {
+    publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource resBastionHost 'Microsoft.Network/bastionHosts@2023-04-01' = {
+  name: varBastionHostName
+  location: parLocation
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'IpConf'
+        properties: {
+          subnet: {
+            id: '${resVnet.id}/subnets/AzureBastionSubnet'
+          }
+          publicIPAddress: {
+            id: resBastionPublicIpAddress.id
+          }
+        }
+      }
+    ]
+  }
+}
+
+output outVnetName string = resVnet.name
+output outVnetId string = resVnet.id
+output outWorkloadSubnetId string = '${resVnet.id}/subnets/workload-snet'

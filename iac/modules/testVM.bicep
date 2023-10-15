@@ -1,20 +1,20 @@
-param location string
-param vmName string
-param vmSubnetId string
-param vmSize string = 'Standard_D2s_v3'
-param vmPublisher string = 'MicrosoftWindowsServer'
-param vmOffer string = 'WindowsServer'
-param vmSku string = '2022-Datacenter'
-param vmVersion string = 'latest'
-param vmStorageAccountType string = 'Premium_LRS'
-param adminUsername string
+param parLocation string
+param parVmName string
+param parVmSubnetId string
+param parVmSize string = 'Standard_D2s_v3'
+param parVmPublisher string = 'MicrosoftWindowsServer'
+param parVmOffer string = 'WindowsServer'
+param parVmSku string = '2022-Datacenter'
+param parVmVersion string = 'latest'
+param parVmStorageAccountType string = 'Premium_LRS'
+param parAdminUsername string
 @secure()
-param adminPassword string
+param parAdminPassword string
 
 
-resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
-  name: '${vmName}-nic'
-  location: location
+resource resNic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+  name: '${parVmName}-nic'
+  location: parLocation
   properties: {
     ipConfigurations: [
       {
@@ -22,7 +22,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: vmSubnetId
+            id: parVmSubnetId
           }
         }
       }
@@ -31,28 +31,28 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
 }
 
 resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
-  name: vmName
-  location: location
+  name: parVmName
+  location: parLocation
   properties: {
     hardwareProfile: {
-      vmSize: vmSize
+      vmSize: parVmSize
     }
     osProfile: {      
-      computerName: vmName
-      adminUsername: adminUsername
-      adminPassword: adminPassword
+      computerName: parVmName
+      adminUsername: parAdminUsername
+      adminPassword: parAdminPassword
     }
     storageProfile: {
       imageReference: {
-        publisher: vmPublisher
-        offer: vmOffer
-        sku: vmSku
-        version: vmVersion
+        publisher: parVmPublisher
+        offer: parVmOffer
+        sku: parVmSku
+        version: parVmVersion
       }
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
-          storageAccountType: vmStorageAccountType
+          storageAccountType: parVmStorageAccountType
         }
         diskSizeGB: 127
       }
@@ -61,7 +61,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: nic.id
+          id: resNic.id
         }
       ]
     }
@@ -73,7 +73,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   // Install the Azure Monitor Agent
   resource ama 'extensions@2021-11-01' = {
     name: 'AzureMonitorWindowsAgent'
-    location: location
+    location: parLocation
     properties: {
       publisher: 'Microsoft.Azure.Monitor'
       type: 'AzureMonitorWindowsAgent'

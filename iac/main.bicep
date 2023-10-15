@@ -1,118 +1,133 @@
 targetScope = 'subscription'
 
-@description('Resources location')
-param location string = 'westeurope'
-
-@description('Two first segments of Virtual Network address prefix. For example, if the address prefix is 10.10.0.0/22, then the value of this parameter should be 10.10')
-param vnetAddressPrefix string = '10.10'
-
 @description('Lab resources prefix.')
-param prefix string = 'iac-ws6'
+param parPrefix string = 'iac-ws6'
+
+param parHubLocation string = 'norwayeast'
+param parSpoke1Location string = 'westeurope'
+param parSpoke2Location string = 'northeurope'
 
 @description('Test VM admin username. Default is iac-admin.')
-param testVMAdminUsername string = 'iac-admin'
+param parVMAdminUsername string = 'iac-admin'
 
 @description('Test VM admin user password')
 @secure()
-param testVMAdminPassword string
+param parVMAdminPassword string
 
-var resourceGroupName = '${prefix}-rg'
-
-resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: resourceGroupName
-  location: location
-  tags: {
-    Department: 'IaC'
-    Owner: 'IaC Team'
-  }
+var varTags = {
+  Department: 'IaC'
+  Owner: 'IaC Team'
 }
 
-module hubVNet 'modules/hubVnet.bicep' = {
-  name: 'DeployHubVNet'
-  scope: rg  
+var varHubResourceGroupName = '${parPrefix}-hub-rg'
+resource resHubResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: varHubResourceGroupName
+  location: parHubLocation
+  tags: varTags
+}
+
+module modHub 'modules/hub.bicep' = {
+  scope: resHubResourceGroup
+  name: 'deploy-hub'
   params: {
-    location: location
-    prefix: prefix
-    vnetAddressPrefix: vnetAddressPrefix
+    parLocation: parHubLocation
+    parPrefix: parPrefix
+    parVnetAddressPrefix: '10.10.0.0/25'
+    parBastionSubnetAddressPrefix: '10.10.0.0/26'
+    parWorkloadSubnetAddressPrefix: '10.10.0.64/26'
   }
 }
 
-module spoke1VNet 'modules/spokeVNet.bicep' = {
-  name: 'DeploySpoke1VNet'
-  scope: rg
+
+var varSpoke1WorkloadName = 'spoke1'
+var varSpoke1ResourceGroupName = '${parPrefix}-${varSpoke1WorkloadName}-rg'
+resource resSpoke1ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: varSpoke1ResourceGroupName
+  location: parSpoke1Location
+  tags: varTags
+}
+module modSpoke1 'modules/spoke.bicep' = {
+  scope: resSpoke1ResourceGroup
+  name: 'deploy-${varSpoke1WorkloadName}'
   params: {
-    location: location
-    prefix: prefix
-    workloadName: 'wl1'
-    vnetAddressPrefix: '${vnetAddressPrefix}.1.0/25'  // 10.10.1.0/25
+    parLocation: parSpoke1Location
+    parPrefix: parPrefix
+    parVnetAddressPrefix: '10.10.0.128/26'
+    parWorkloadName: varSpoke1WorkloadName
   }
 }
 
-module spoke2VNet 'modules/spokeVNet.bicep' = {
-  name: 'DeploySpoke2VNet'
-  scope: rg
+var varSpoke2WorkloadName = 'spoke2'
+var varSpoke2ResourceGroupName = '${parPrefix}-${varSpoke2WorkloadName}-rg'
+resource resSpoke2ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: varSpoke2ResourceGroupName
+  location: parSpoke2Location
+  tags: varTags
+}
+module modSpoke2 'modules/spoke.bicep' = {
+  scope: resSpoke2ResourceGroup
+  name: 'deploy-${varSpoke2WorkloadName}'
   params: {
-    location: location
-    prefix: prefix
-    workloadName: 'wl2'
-    vnetAddressPrefix: '${vnetAddressPrefix}.2.0/25'  // 10.10.2.0/25
+    parLocation: parSpoke2Location
+    parPrefix: parPrefix
+    parVnetAddressPrefix: '10.10.0.192/26'
+    parWorkloadName: varSpoke2WorkloadName
   }
 }
 
-module hubToWL1Peering 'modules/vnetPeering.bicep' = {
-  name: 'HubToWL1SpokePeering'
-  scope: rg
+
+module modLinkSpoke1ToHub 'modules/peeringToHub.bicep' = {
+  scope: resHubResourceGroup
+  name: 'link-spoke1-to-hub'
   params: {
-    fromVNetName: hubVNet.outputs.name
-    toVNetName: spoke1VNet.outputs.name
+    parHubVNetName: modHub.outputs.outVnetName
+    parSpokeVNetName: modSpoke1.outputs.outVnetName
+    parSpokeVnetId: modSpoke1.outputs.outVnetId
   }
 }
 
-module WL1TohUBPeering 'modules/vnetPeering.bicep' = {
-  name: 'WL1SpokeTohUBPeering'
-  scope: rg
+module modLinkSpoke2ToHub 'modules/peeringToHub.bicep' = {
+  scope: resHubResourceGroup
+  name: 'link-spoke2-to-hub'
   params: {
-    fromVNetName: spoke1VNet.outputs.name
-    toVNetName: hubVNet.outputs.name
+    parHubVNetName: modHub.outputs.outVnetName
+    parSpokeVNetName: modSpoke2.outputs.outVnetName
+    parSpokeVnetId: modSpoke2.outputs.outVnetId
   }
 }
 
-module hubToWL2Peering 'modules/vnetPeering.bicep' = {
-  name: 'HubToWL2SpokePeering'
-  scope: rg
-  params: {
-    fromVNetName: hubVNet.outputs.name
-    toVNetName: spoke2VNet.outputs.name
+module modSpoke1Vm 'modules/testVM.bicep' = {
+  scope: resSpoke1ResourceGroup
+  name: 'deploy-spoke1-testvm'
+  params: {    
+    parLocation: parSpoke1Location
+    parVmName: 'spoke1Vm'
+    parVmSubnetId: modSpoke1.outputs.outWorkloadSubnetId
+    parAdminUsername: parVMAdminUsername
+    parAdminPassword: parVMAdminPassword
   }
 }
 
-module WL2TohUBPeering 'modules/vnetPeering.bicep' = {
-  name: 'WL2SpokeTohUBPeering'
-  scope: rg
-  params: {
-    fromVNetName: spoke2VNet.outputs.name
-    toVNetName: hubVNet.outputs.name
+module modSpoke2Vm 'modules/testVM.bicep' = {
+  scope: resSpoke2ResourceGroup
+  name: 'deploy-spoke2-testvm'
+  params: {    
+    parLocation: parSpoke2Location
+    parVmName: 'spoke2Vm'
+    parVmSubnetId: modSpoke2.outputs.outWorkloadSubnetId
+    parAdminUsername: parVMAdminUsername
+    parAdminPassword: parVMAdminPassword
   }
 }
 
-module bastion 'modules/bastion.bicep' = {
-  name: 'DeployBastion'
-  scope: rg
-  params: {
-    location: location
-    prefix: prefix
-    bastionSubnetId: '${hubVNet.outputs.id}/subnets/AzureBastionSubnet'
+module modHubVm 'modules/testVM.bicep' = {
+  scope: resHubResourceGroup
+  name: 'deploy-hub-testvm'
+  params: {    
+    parLocation: parHubLocation
+    parVmName: 'hubVm'
+    parVmSubnetId: modHub.outputs.outWorkloadSubnetId
+    parAdminUsername: parVMAdminUsername
+    parAdminPassword: parVMAdminPassword
   }
 }
-
-// module testVM 'modules/testVM.bicep' = {
-//   scope: rg
-//   name: 'Deploy VM1'
-//   params: {
-//     location: location
-//     vmName: 'testVM'
-//     vmSubnetId: '${vnet.outputs.id}/subnets/testvm-snet'
-//     adminUsername: testVMAdminUsername
-//     adminPassword: testVMAdminPassword
-//   }
-// }
