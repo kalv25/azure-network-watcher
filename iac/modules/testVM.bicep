@@ -69,7 +69,7 @@ resource resVm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   identity: {
     type: 'SystemAssigned'
   }
-
+  
   // Install the Azure Monitor Agent
   resource resAma 'extensions@2021-11-01' = {
     name: 'AzureMonitorWindowsAgent'
@@ -82,4 +82,37 @@ resource resVm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
       enableAutomaticUpgrade: true
     }
   }
+}
+
+resource vmFEIISEnabled 'Microsoft.Compute/virtualMachines/runCommands@2023-07-01' = {
+  name: 'enable-iis-at-${parVmName}'
+  location: parLocation
+  parent: resVm
+  properties: {
+    asyncExecution: false
+    source: {
+      script: '''
+        Install-WindowsFeature -name Web-Server -IncludeManagementTools
+        Remove-Item C:\\inetpub\\wwwroot\\iisstart.htm
+        Add-Content -Path "C:\\inetpub\\wwwroot\\iisstart.htm" -Value $("Hello from " + $env:computername)  
+      '''
+    }
+  }
+}
+
+resource resScheduledShutdown 'microsoft.devtestlab/schedules@2018-09-15' = {
+  name: 'shutdown-computevm-${parVmName}'
+  location: parLocation
+  properties: {
+    status: 'Enabled'
+    taskType: 'ComputeVmShutdownTask'
+    dailyRecurrence: {
+      time: '1600'
+    }
+    timeZoneId: 'W. Europe Standard Time'
+    notificationSettings: {
+      status: 'Disabled'
+    }
+    targetResourceId: resVm.id
+  }  
 }

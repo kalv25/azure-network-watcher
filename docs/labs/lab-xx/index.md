@@ -4,9 +4,10 @@ This is the most important part of the workshop. We need to clean up all resourc
 
 ## Task #1 - delete lab infrastructure
 
-Remove all resources that were created during the workshop by running the following command:
+Remove all resources that were created during the workshop by running the following commands:
 
 ```powershell
-az group delete --name iac-ws6-rg --yes --no-wait
+az group delete --name iac-ws6-hub-rg --yes --no-wait
+az group delete --name iac-ws6-spoke1-rg --yes --no-wait
+az group delete --name iac-ws6-spoke2-rg --yes --no-wait
 ```
-

@@ -38,6 +38,75 @@ module modHub 'modules/hub.bicep' = {
   }
 }
 
+var varUniqueString = uniqueString(subscription().id)
+module modNSGFlowLogsNorwayEast 'modules/sa.bicep' = {
+  name: 'deploy-nsg-flow-logs-sa-for-norwayeast'
+  scope: resHubResourceGroup
+  params: {
+    parLocation: parHubLocation
+    parStorageAccountName: take('norwayeast${varUniqueString}', 24)
+  }
+}
+module modNSGFlowLogsWestEurope 'modules/sa.bicep' = {
+  name: 'deploy-nsg-flow-logs-sa-for-westeurope'
+  scope: resHubResourceGroup
+  params: {
+    parLocation: parSpoke1Location
+    parStorageAccountName: take('westeurope${varUniqueString}', 24)
+  }
+}
+
+module modNSGFlowLogsNorthEurope 'modules/sa.bicep' = {
+  name: 'deploy-nsg-flow-logs-sa-for-northeurope'
+  scope: resHubResourceGroup
+  params: {
+    parLocation: parSpoke2Location
+    parStorageAccountName: take('northeurope${varUniqueString}', 24)
+  }
+}
+
+param parNetworkWatcherResourceGroupName string = 'NetworkWatcherRG'
+resource resNetworkWatcherResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: parNetworkWatcherResourceGroupName
+  location: parHubLocation
+  tags: varTags
+}
+
+var varNetworkWatcherName = 'NetworkWatcher_${parHubLocation}'
+module modNetwrokWatcher 'modules/networkWatcher.bicep' = {
+  scope: resNetworkWatcherResourceGroup
+  name: 'deploy-networkwatcher-${parHubLocation}'
+  params: {
+    parLocation: parHubLocation
+    parNetworkWatcherName: varNetworkWatcherName
+  }
+}
+
+module modNsgFlowLogBastion 'modules/flowlogs.bicep' = {
+  scope: resNetworkWatcherResourceGroup
+  name: 'deploy-nsg-flowlog-bastion'
+  params: {
+    parFlowlogName: '${parPrefix}-bastion-nsg-flowlog'
+    parLocation: parHubLocation
+    parNetworkWatcherName: varNetworkWatcherName
+    parNsgId: modHub.outputs.outBastionNsgId
+    parStorageId: modNSGFlowLogsNorwayEast.outputs.outId
+    parWorkspaceResourceId: modHub.outputs.outLogAnalyticsWorkspaceId
+  }
+}
+
+module modNsgFlowLogHubWorkload 'modules/flowlogs.bicep' = {
+  scope: resNetworkWatcherResourceGroup
+  name: 'deploy-nsg-flowlog-hub-workload'
+  params: {
+    parFlowlogName: '${parPrefix}-hub-workload-nsg-flowlog'
+    parLocation: parHubLocation
+    parNetworkWatcherName: 'NetworkWatcher_${parHubLocation}'
+    parNsgId: modHub.outputs.outWorkloadNsgId
+    parStorageId: modNSGFlowLogsNorwayEast.outputs.outId
+    parWorkspaceResourceId: modHub.outputs.outLogAnalyticsWorkspaceId
+  }
+}
 
 var varSpoke1WorkloadName = 'spoke1'
 var varSpoke1ResourceGroupName = '${parPrefix}-${varSpoke1WorkloadName}-rg'
@@ -46,7 +115,8 @@ resource resSpoke1ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' 
   location: parSpoke1Location
   tags: varTags
 }
-module modSpoke1 'modules/spoke.bicep' = {
+
+module modSpoke1 'modules/spoke1.bicep' = {
   scope: resSpoke1ResourceGroup
   name: 'deploy-${varSpoke1WorkloadName}'
   params: {
@@ -64,7 +134,7 @@ resource resSpoke2ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' 
   location: parSpoke2Location
   tags: varTags
 }
-module modSpoke2 'modules/spoke.bicep' = {
+module modSpoke2 'modules/spoke2.bicep' = {
   scope: resSpoke2ResourceGroup
   name: 'deploy-${varSpoke2WorkloadName}'
   params: {
@@ -74,7 +144,6 @@ module modSpoke2 'modules/spoke.bicep' = {
     parWorkloadName: varSpoke2WorkloadName
   }
 }
-
 
 module modLinkSpoke1ToHub 'modules/peeringToHub.bicep' = {
   scope: resHubResourceGroup
@@ -94,7 +163,6 @@ module modHubToSpoke1 'modules/peeringToHub.bicep' = {
     parFromVnetId: modHub.outputs.outVnetId
   }
 }
-
 
 module modLinkSpoke2ToHub 'modules/peeringToHub.bicep' = {
   scope: resHubResourceGroup

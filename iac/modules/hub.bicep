@@ -3,6 +3,7 @@ param parPrefix string
 param parVnetAddressPrefix string
 param parBastionSubnetAddressPrefix string
 param parWorkloadSubnetAddressPrefix string
+@description('Azure Storage Account Name')
 
 resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: '${varVirtualNetworkName}-bastion-nsg'
@@ -156,6 +157,46 @@ var varVirtualNetworkName = '${parPrefix}-hub-vnet'
 resource resWorkloadNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: '${varVirtualNetworkName}-workload-nsg'
   location: parLocation
+  properties: {
+    securityRules: [
+      {
+        name: 'DenyAllInbound'
+        type: 'Microsoft.Network/networkSecurityGroups/securityRules'
+        properties: {
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          access: 'Deny'
+          priority: 4096
+          direction: 'Inbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'DenyAllOutbound'
+        type: 'Microsoft.Network/networkSecurityGroups/securityRules'
+        properties: {
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          access: 'Deny'
+          priority: 4096
+          direction: 'Outbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+    ]
+  }
 }
 
 resource resVnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
@@ -226,6 +267,21 @@ resource resBastionHost 'Microsoft.Network/bastionHosts@2023-04-01' = {
   }
 }
 
+
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+  name: '${parPrefix}-${uniqueString(resourceGroup().id)}-log'
+  location: parLocation
+  properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    retentionInDays: 30
+  }
+}
+
 output outVnetName string = resVnet.name
 output outVnetId string = resVnet.id
 output outWorkloadSubnetId string = '${resVnet.id}/subnets/workload-snet'
+output outBastionNsgId string = resBastionNsg.id
+output outWorkloadNsgId string = resWorkloadNsg.id
+output outLogAnalyticsWorkspaceId string = resLogAnalyticsWorkspace.id
