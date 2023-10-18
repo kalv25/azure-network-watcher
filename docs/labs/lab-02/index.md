@@ -39,10 +39,10 @@ az group create --name 'iac-ws6-networkwatcher-rg' --location 'northeurope'
 az network watcher configure --resource-group 'iac-ws6-networkwatcher-rg' --locations 'northeurope' --enabled
 ```
 
-## Task #3 - enable Network Watcher in `northeurope` region using Bicep
+## Task #3 - enable Network Watcher in `norwayeast` region using Bicep
 
 If you want to customize the name of a Network Watcher instance to follow your company's naming conventions, you should use PowerShell, REST API or Bicep methods. 
-Let's deploy a Network Watcher instance in `northeurope` region using Bicep.
+Let's deploy a Network Watcher instance in `norwayeast` region using Bicep.
 
 Create new file called `main.bicep` and paste the following code:
 

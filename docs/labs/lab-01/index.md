@@ -2,6 +2,16 @@
 
 As always, we need to provision lab environment before we can start working on the lab tasks. 
 
+```powershell
+# Make sure that all Resource Providers are registered
+az provider register --namespace Microsoft.Insights
+az provider register --namespace Microsoft.Network
+az provider register --namespace Microsoft.OperationalInsights
+az provider register --namespace Microsoft.Storage
+az provider register --namespace Microsoft.Compute
+az provider register --namespace microsoft.devtestlab
+
+```
 
 | Vnet | IP range | Location |
 |------|----------|----------|
