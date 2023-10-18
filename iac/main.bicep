@@ -192,6 +192,7 @@ module modSpoke1Vm 'modules/testVM.bicep' = {
     parVmSubnetId: modSpoke1.outputs.outWorkloadSubnetId
     parAdminUsername: parVMAdminUsername
     parAdminPassword: parVMAdminPassword
+    parOsType: 'windows'
   }
 }
 
@@ -204,6 +205,7 @@ module modSpoke2Vm 'modules/testVM.bicep' = {
     parVmSubnetId: modSpoke2.outputs.outWorkloadSubnetId
     parAdminUsername: parVMAdminUsername
     parAdminPassword: parVMAdminPassword
+    parOsType: 'windows'
   }
 }
 
@@ -216,5 +218,6 @@ module modHubVm 'modules/testVM.bicep' = {
     parVmSubnetId: modHub.outputs.outWorkloadSubnetId
     parAdminUsername: parVMAdminUsername
     parAdminPassword: parVMAdminPassword
+    parOsType: 'linux'
   }
 }

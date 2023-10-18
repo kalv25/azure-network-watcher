@@ -1,10 +1,10 @@
 # lab-02 - enable Network Watcher
 
-Before we start, let's make sure that Network Watcher is enabled. network Watcher is a regional service, so we need to enable it in each region we want to use it. Our lab environment is deployed across three regions: `norwayeast`, `westeurope` and `northeurope` so we need to enable it in all three regions.
+First, let's make sure that Network Watcher is enabled. Network Watcher is a regional service, so we need to enable it in each region we want to use it in. Our lab environment is deployed across three regions: `norwayeast`, `westeurope` and `northeurope`, so we need to enable it in all three regions.
 
 ## Task #1 - enable Network Watcher in `westeurope` region using Azure Portal
 
-First, let's enable Network Watcher in `westeurope` region using Azure Portal.
+Let's enable Network Watcher in `westeurope` region using Azure Portal.
 Navigate to [Network Watcher blade](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/overview).
 It's quite possible that Network Watcher is already enabled for most of the regions you actively use in your subscription. If that's the case, you should see it in the list. 
 
