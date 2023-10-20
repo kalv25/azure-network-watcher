@@ -101,7 +101,7 @@ module modNsgFlowLogHubWorkload 'modules/flowlogs.bicep' = {
   params: {
     parFlowlogName: '${parPrefix}-hub-workload-nsg-flowlog'
     parLocation: parHubLocation
-    parNetworkWatcherName: 'NetworkWatcher_${parHubLocation}'
+    parNetworkWatcherName: varNetworkWatcherName
     parNsgId: modHub.outputs.outWorkloadNsgId
     parStorageId: modNSGFlowLogsNorwayEast.outputs.outId
     parWorkspaceResourceId: modHub.outputs.outLogAnalyticsWorkspaceId
