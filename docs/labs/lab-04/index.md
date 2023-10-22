@@ -96,7 +96,7 @@ If you now go to [Network Watcher -> Flow logs](https://portal.azure.com/#view/M
 
 ## Task #3 - generate some traffic from `hubVm` to `spoke1Vm`
 
-Use Bastion and initiate SSH session into `hubVm`. Once connected, run the following command to generate some traffic from `hubVm` to `spoke1Vm`:
+Use Bastion and initiate SSH session into `hubVm`. Once connected, run the following command to generate some traffic from `hubVm` to `spoke1Vm` with private IP 10.10.0.132:
 
 ```bash
 iac-admin@hubVm:~$ curl http://10.10.0.132
@@ -264,4 +264,4 @@ You should now see a response from `spoke1Vm` in form of `Hello from spoke1Vm` m
 
 - try to access `spoke2Vm` from `hubVm` using SSH
 - using NSG flow logs of `iac-ws6-hub-vnet-workload-nsg` and `iac-ws6-spoke2-vnet-nsg` NSGs, identify if traffic is blocked and fix it by adding corresponding NSG rules
-- make sure that you can access `spoke2Vm` from `hubVm` using SSH
+- make sure that `spoke2Vm` response with `Hello from spoke2Vm` message
