@@ -111,7 +111,7 @@ winget install --id=Microsoft.Azure.StorageExplorer  -e
 
 Once installed, connect to your subscription. NSG flow logs is regional product and it stores logs to the Storage Account located at the same region where NSG is deployed. 
 
-`hubVm` is deployed into `workload-snet` subnet with `iac-ws6-hub-vnet-workload-nsg` NSG assigned to it. Check what Storage account is used for NSG flow logs.
+`hubVm` is deployed into `workload-snet` subnet with `iac-ws6-hub-vnet-workload-nsg` NSG assigned to it. Check what Storage account is used for `iac-ws6-hub-vnet-workload-nsg` NSG flow logs.
 
 ![00](../../assets/images/lab-04/nsg-1.png)
 
@@ -182,7 +182,7 @@ The comma-separated information for `flowTuples` is as follows:
 
 From here we know that traffic was blocked and it was blocked by the `UserRule_DenyAllOutbound` rule.
 
-## Task #3 - allow outbound traffic from `hubVm` to `spoke1Vm`
+## Task #3 - allow outbound HTTP traffic from `hubVm` to `spoke1Vm`
 
 Add new outbound rule to `iac-ws6-hub-vnet-workload-nsg` NSG rule that allows TCP traffic at port 80 from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
 
@@ -215,7 +215,53 @@ We still get timeout. Let's check NSG flow logs of `iac-ws6-hub-vnet-workload-ns
 "1697872527,10.10.0.68,10.10.0.132,36852,80,T,O,A,B,,,,"
 ```
 
-As you can see, the action is now `A` which stands for `allowed`. 
-That means that connection is now allowed but it still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
+As you can see, the action is now `A` which stands for `allowed`. That means that connection is now allowed, but it's still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
 
-## Task #4 - check NSG flow lo
+## Task #4 - check NSG flow logs of `iac-ws6-spoke1-vnet-nsg` network security group
+
+Check what storage account is configured for `iac-ws6-spoke1-vnet-nsg`.
+
+![00](../../assets/images/lab-04/nsg-2.png)
+
+Download `PT1H.json` file, open it and search for flow tuples containing `10.10.0.68,10.10.0.132`. You should find something similar to this:
+
+```txt
+"1697964965,10.10.0.68,10.10.0.132,40142,80,T,I,D,B,,,,"
+```
+
+As you can see, the action is `D` which stands for `denied`. Let's fix that. 
+
+## Task #5 - allow inbound HTTP traffic from `hubVm` to `spoke1Vm`
+
+Add new inbound rule to `iac-ws6-spoke1-vnet-nsg` NSG rule that allows HTTP traffic from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
+
+![00](../../assets/images/lab-04/spoke1-nsg-1.png)
+
+Fill in the following parameters:
+
+| Parameter | Value |
+|-----------|-------|
+| Source | `10.10.0.0/25` - iac-ws6-hub-vnet |
+| Source port ranges | `*` |
+| Destination | `10.10.0.128/26` - iac-ws6-spoke1-vnet |
+| Source | `HTTP` |
+| Action | `Allow` |
+| Priority | `200` |
+| Name | `allow-http-inbound` |
+
+When filled, click on `Add`.
+
+Go back to SSH session at `hubVm` and try to call `spoke1Vm` again:
+
+```bash
+iac-admin@hubVm:~$ curl http://10.10.0.132
+Hello from spoke1Vm
+```
+
+You should now see a response from `spoke1Vm` in form of `Hello from spoke1Vm` message.
+
+## Task #6 - repeat the same exercise for `spoke2Vm`
+
+- try to access `spoke2Vm` from `hubVm` using SSH
+- using NSG flow logs of `iac-ws6-hub-vnet-workload-nsg` and `iac-ws6-spoke2-vnet-nsg` NSGs, identify if traffic is blocked and fix it by adding corresponding NSG rules
+- make sure that you can access `spoke2Vm` from `hubVm` using SSH
