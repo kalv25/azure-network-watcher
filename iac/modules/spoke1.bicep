@@ -45,6 +45,48 @@ resource resNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           destinationAddressPrefixes: []
         }
       }
+      {
+        name: 'allow-outbound-http-to-169.254.169.254'
+        type: 'Microsoft.Network/networkSecurityGroups/securityRules'
+        properties: {
+          protocol: 'TCP'
+          sourcePortRange: '*'
+          destinationPortRange: '80'
+          sourceAddressPrefix: '10.10.0.128/26'
+          destinationAddressPrefix: '169.254.169.254'
+          access: 'Allow'
+          priority: 200
+          direction: 'Outbound'
+        }
+      }      
+      {
+        name: 'allow-outbound-to-168.63.129.16-port-8037'
+        type: 'Microsoft.Network/networkSecurityGroups/securityRules'
+        properties: {
+          protocol: 'TCP'
+          sourcePortRange: '*'
+          destinationPortRange: '8037'
+          sourceAddressPrefix: '10.10.0.128/26'
+          destinationAddressPrefix: '168.63.129.16'
+          access: 'Allow'
+          priority: 250
+          direction: 'Outbound'
+        }
+      }      
+      {
+        name: 'allow-outboud-to-storage-port-443'
+        type: 'Microsoft.Network/networkSecurityGroups/securityRules'
+        properties: {
+          protocol: 'TCP'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+          sourceAddressPrefix: '10.10.0.128/26'
+          destinationAddressPrefix: 'Storage'
+          access: 'Allow'
+          priority: 100
+          direction: 'Outbound'
+        }
+      }      
     ]
   }
 }

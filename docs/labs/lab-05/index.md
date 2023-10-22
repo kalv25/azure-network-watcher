@@ -20,6 +20,16 @@ watch -n 1 curl -s http://10.10.0.132
 
 ## Task #2 - create a packet capture session
 
+!!! info "Note"
+    A virtual machine where you want to capture packets, [should have the following outbound TCP connectivity](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-portal#prerequisites):
+    - 443 (HTTPS) to Azure Storage
+    - 80 to 169.254.169.254
+    - 8037 to 168.63.129.16
+
+In our lab, it was already configured with master deployment.
+
+![00](../../assets/images/lab-05/config-0.png) 
+
 Navigate to [Network watcher -> Packet capture](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/packetCapture) and click `+ Add`
 
 ![00](../../assets/images/lab-05/config-1.png)
@@ -92,3 +102,6 @@ ip.addr eq 10.10.0.68 and ip.addr eq 10.10.0.132 and tcp.port eq 80
 
 
 
+## Links
+
+- [Manage packet captures in virtual machines with Azure Network Watcher](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-portal#prerequisites)
