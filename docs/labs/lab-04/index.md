@@ -214,6 +214,8 @@ We still get timeout. Let's check NSG flow logs of `iac-ws6-hub-vnet-workload-ns
 ```txt
 "1697872527,10.10.0.68,10.10.0.132,36852,80,T,O,A,B,,,,"
 ```
+
 As you can see, the action is now `A` which stands for `allowed`. 
 That means that connection is now allowed but it still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
 
+## Task #4 - check NSG flow lo
