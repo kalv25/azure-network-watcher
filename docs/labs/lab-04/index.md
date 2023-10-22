@@ -90,7 +90,7 @@ Deploy Bicep template using the following command:
 az deployment group create --resource-group 'NetworkWatcherRG' --template-file .\flowlogs.bicep
 ```	
 
-If you now go to [Network Watcher -> Flow logs](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/flowLogs), you should see that all four Network Security Groups used in our lab environment have flow logs enabled.
+If you now go to [Network Watcher -> Flow logs](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/flowLogs), you should see that all four Network Security Groups used in our lab environment have now flow logs enabled.
 
 ![00](../../assets/images/lab-04/flowlog-6.png)
 
