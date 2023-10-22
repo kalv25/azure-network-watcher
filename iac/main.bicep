@@ -65,6 +65,15 @@ module modNSGFlowLogsNorthEurope 'modules/sa.bicep' = {
   }
 }
 
+module modPacketCaptureSA 'modules/sa.bicep' = {
+  name: 'deploy-packet-capture-sa'
+  scope: resHubResourceGroup
+  params: {
+    parLocation: parHubLocation
+    parStorageAccountName: take('packetcapture${varUniqueString}', 24)
+  }
+}
+
 param parNetworkWatcherResourceGroupName string = 'NetworkWatcherRG'
 resource resNetworkWatcherResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: parNetworkWatcherResourceGroupName
