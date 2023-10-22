@@ -36,7 +36,7 @@ When filled, click on `Review + create` and then on `Create`
 
 Let's configure flow logs for `iac-ws6-spoke1-vnet-nsg` using Bicep. We need to collect some resource ids first. 
 
-```powershell
+```powershells
 # Get Network Security Group Id. It will be used as a parNsgId parameter for Bicep template.
 az network nsg show -n iac-ws6-spoke1-vnet-nsg -g iac-ws6-spoke1-rg --query id -otsv
 
@@ -94,7 +94,7 @@ If you now go to [Network Watcher -> Flow logs](https://portal.azure.com/#view/M
 
 ![00](../../assets/images/lab-04/flowlog-6.png)
 
-## Task #2 - generate some traffic from `hubVm` to `spoke1Vm`
+## Task #3 - generate some traffic from `hubVm` to `spoke1Vm`
 
 Use Bastion and initiate SSH session into `hubVm`. Once connected, run the following command to generate some traffic from `hubVm` to `spoke1Vm`:
 
@@ -182,7 +182,7 @@ The comma-separated information for `flowTuples` is as follows:
 
 From here we know that traffic was blocked and it was blocked by the `UserRule_DenyAllOutbound` rule.
 
-## Task #3 - allow outbound HTTP traffic from `hubVm` to `spoke1Vm`
+## Task #4 - allow outbound HTTP traffic from `hubVm` to `spoke1Vm`
 
 Add new outbound rule to `iac-ws6-hub-vnet-workload-nsg` NSG rule that allows TCP traffic at port 80 from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
 
@@ -217,7 +217,7 @@ We still get timeout. Let's check NSG flow logs of `iac-ws6-hub-vnet-workload-ns
 
 As you can see, the action is now `A` which stands for `allowed`. That means that connection is now allowed, but it's still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
 
-## Task #4 - check NSG flow logs of `iac-ws6-spoke1-vnet-nsg` network security group
+## Task #5 - check NSG flow logs of `iac-ws6-spoke1-vnet-nsg` network security group
 
 Check what storage account is configured for `iac-ws6-spoke1-vnet-nsg`.
 
@@ -231,7 +231,7 @@ Download `PT1H.json` file, open it and search for flow tuples containing `10.10.
 
 As you can see, the action is `D` which stands for `denied`. Let's fix that. 
 
-## Task #5 - allow inbound HTTP traffic from `hubVm` to `spoke1Vm`
+## Task #6 - allow inbound HTTP traffic from `hubVm` to `spoke1Vm`
 
 Add new inbound rule to `iac-ws6-spoke1-vnet-nsg` NSG rule that allows HTTP traffic from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
 
@@ -260,7 +260,7 @@ Hello from spoke1Vm
 
 You should now see a response from `spoke1Vm` in form of `Hello from spoke1Vm` message.
 
-## Task #6 - repeat the same exercise for `spoke2Vm`
+## Task #7 - repeat the same exercise for `spoke2Vm`
 
 - try to access `spoke2Vm` from `hubVm` using SSH
 - using NSG flow logs of `iac-ws6-hub-vnet-workload-nsg` and `iac-ws6-spoke2-vnet-nsg` NSGs, identify if traffic is blocked and fix it by adding corresponding NSG rules
