@@ -36,7 +36,7 @@ When filled, click on `Review + create` and then on `Create`
 
 Let's configure flow logs for `iac-ws6-spoke1-vnet-nsg` using Bicep. We need to collect some resource ids first. 
 
-```powershells
+```powershell
 # Get Network Security Group Id. It will be used as a parNsgId parameter for Bicep template.
 az network nsg show -n iac-ws6-spoke1-vnet-nsg -g iac-ws6-spoke1-rg --query id -otsv
 

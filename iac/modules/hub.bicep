@@ -269,7 +269,7 @@ resource resBastionHost 'Microsoft.Network/bastionHosts@2023-04-01' = {
 
 
 resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: '${parPrefix}-${uniqueString(resourceGroup().id)}-log'
+  name: '${parPrefix}-${uniqueString(resourceGroup().id)}-law'
   location: parLocation
   properties: {
     sku: {
