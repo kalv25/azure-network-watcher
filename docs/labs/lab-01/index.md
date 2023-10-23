@@ -34,8 +34,11 @@ The following resources will be deployed in your subscription under the followin
 - Two Network Security Group 
 - Virtual machine
 
-The network topology will look as follow:
+## The network topology will look as follow:
+
 ![01](../../assets/images/lab-01/hub-spoke.png)
+
+Here is Virtual Networks Address Space and Subnets configuration:
 
 | Vnet | subnet | IP range | Location |
 |------|----------| --------|----------|
@@ -43,6 +46,14 @@ The network topology will look as follow:
 | iac-ws6-hub-vnet (10.10.0.0/26) | workload-snet | 10.10.0.64/26 | norwayeast |
 | iac-ws6-spoke1-vnet (10.10.0.128/26) | workload-snet | 10.10.0.128/26 | westeurope |
 | iac-ws6-spoke2-vnet (10.10.0.192/26) | workload-snet | 10.10.0.192/26 | northeurope |      
+
+## Virtual Machines configuration
+| Virtual Machine name | OS | VNEt/subnet  | IP | Location |
+|----------------------|----|--------------|----|----------|
+| hubVm | linux | iac-ws6-hub-vnet/workload-snet | 10.10.0.68 | norwayeast |
+| spoke1Vm | windows | iac-spoke1-vnet/workload-snet | 10.10.0.132 | westeurope |
+| spoke2Vm | windows | iac-spoke2-vnet/workload-snet | 10.10.0.196 | northeurope |
+
 
 Lab environment is implemented using Bicep and you can check the [master deployment script](/iac/main.bicep).
 
@@ -83,3 +94,4 @@ cd cd .\azure-network-watcher\iac
 ```
 
 Deployment will take between 5-10 min. 
+
