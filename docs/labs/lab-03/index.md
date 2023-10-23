@@ -37,7 +37,7 @@ Fill in the following information:
 | Direction | Select `Inbound` |
 | Local IP address | Preselected. Should be IP associated with spoke1Vm-nic - `10.10.0.132`  |
 | Local port | Enter `3389` |
-| Remote IP address | Enter on of the IP from bastion subnet range, for example `10.10.0.4`  |
+| Remote IP address | Enter one of the IPs from bastion subnet range, for example `10.10.0.4`  |
 | Remote port | Any port, let's use 65000 |
 
 When filled, click on `Verify IP flow`. We should get `Access denied` result:
