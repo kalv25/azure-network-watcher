@@ -8,7 +8,7 @@ There are three Virtual Machines deployed in our lab environment. One Linux VM t
 | spoke1Vm | 10.10.0.132 | iac-ws6-spoke1-vnet | 10.10.0.128/26 | westeurope |
 | spoke1Vm | 10.10.0.196 | iac-ws6-spoke2-vnet | 10.10.0.192/26 | northeurope |      
 
-Let's try to DRP into `spoke1Vm` using Bastion. Navigate to `Operations->Bastion` blade under `spoke1Vm`. Use `ìac-admin` as `Username` and use password that you have set during the deployment of the lab environment. Click on `Connect`.
+Let's try to RDP into `spoke1Vm` using Bastion. Navigate to `Operations->Bastion` blade under `spoke1Vm`. Use `iac-admin` as `Username` and use password that you have set during the deployment of the lab environment. Click on `Connect`.
 
 ![00](../../assets/images/lab-03/rdp-1.png)
 
@@ -118,4 +118,4 @@ Test that you can RDP into `spoke2Vm` using Bastion.
 ## Task #4 - use `NSG diagnostic` and/or `IP flow verify` tools to check if SSH is allowed or denied to `hubVm`
 
 Do the same exercise for Linux VM - `hub2Vm`. If you can't SSH into it, fix it.
-Test that you can RDP into `hub2Vm` using Bastion.
+Test that you can SSH into `hub2Vm` using Bastion.
