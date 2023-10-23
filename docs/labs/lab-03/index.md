@@ -20,6 +20,9 @@ Close Bastion session and let's try to troubleshoot the problem using Network Wa
 
 ## Task #1 - use `IP flow verify` to check if RDP is allowed or denied to `spoke1Vm`
 
+Here is visualization of where we are now:
+![00](../../assets/images/lab-03/use-case1.png)
+
 IP flow verify is a feature in Azure Network Watcher that you can use to check if a packet is allowed or denied to or from an Azure virtual machine based on the configured security rules. It helps you to troubleshoot virtual machine connectivity issues by checking network security group (NSG) rules. 
 
 Navigate to [Network Watcher->IP flow verify](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/verifyIPFlow) blade. 
@@ -63,7 +66,7 @@ Fill in the following information:
 | Protocol | Select `TCP` |
 | Direction | Select `Inbound` |
 | Source type | Select `IPv4 address/CIDR` |
-| IPv4 address/CIDR | Enter `10.10.0.26` - bastion subnet address range |
+| IPv4 address/CIDR | Enter `10.10.0.0/26` - bastion-snet subnet address range |
 | Destination IP address |  `10.10.0.132` - `spoke1Vm` IP address  |
 | Destination port | Enter `3389` |
 
@@ -108,6 +111,10 @@ It takes some time for NSG changes to take effect, so wait 30-60 sec and click `
 Now, let's try to RDP into `spoke1Vm` using Bastion again. Navigate to `Operations->Bastion` blade under `spoke1Vm`. Use `ìac-admin` as `Username` and use password that you have set during the deployment of the lab environment. Click on `Connect`. You should now be able to connect to `spoke1Vm`!
 
 ![00](../../assets/images/lab-03/rdp-ok.png)
+
+Here is another way to visualize how did we fix the problem:
+
+![00](../../assets/images/lab-03/use-case2.png)
 
 ## Task #3 - use `NSG diagnostic` and/or `IP flow verify` tools to check if RDP is allowed or denied to `spoke2Vm`
 

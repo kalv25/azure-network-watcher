@@ -402,3 +402,6 @@ site
 
 # bicep parameters file(s)
 main.parameters.json
+
+# draw.io files
+*.dtmp
