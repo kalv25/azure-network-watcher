@@ -10,4 +10,7 @@ Remove all resources that were created during the workshop by running the follow
 az group delete --name iac-ws6-spoke1-rg --yes --no-wait
 az group delete --name iac-ws6-spoke2-rg --yes --no-wait
 az group delete --name iac-ws6-hub-rg --yes --no-wait
+
+# if you managed to create the network watcher with az cli, run this command as well
+az group delete --name iac-ws6-networkwatcher-rg --yes --no-wait
 ```
