@@ -6,11 +6,16 @@ First, let's make sure that Network Watcher is enabled. Network Watcher is a reg
 
 Let's enable Network Watcher in `westeurope` region using Azure Portal.
 Navigate to [Network Watcher blade](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/overview).
-It's quite possible that Network Watcher is already enabled for most of the regions you actively use in your subscription. If that's the case, you should see it in the list. 
 
-![00](../../assets/images/lab-02/enable-nw-00.png)
+!!! info "Note"
+    It's very likely that Network Watcher is already enabled in all three regions in your subscription. If that's the case, you should see all three instances for `norwayeast`, `westeurope` and `northeurope`. 
 
-If not, let's enable it. From Overview blade, click on `+ Add` button. Select your Subscription, select `West Europe` as a region and then Click on `Add`.
+![00](../../assets/images/lab-02/nw.png)
+
+!!! info "Note"
+  If all Network Watcher instances are enables, you can skip this lab!
+
+Otherwise, let's enable it. From Overview blade, click on `+ Add` button. Select your Subscription, select `West Europe` as a region and then Click on `Add`.
 
 ![01](../../assets/images/lab-02/enable-nw-01.png)
 

@@ -104,5 +104,5 @@ cd cd .\azure-network-watcher\iac
 ./deploy.ps1
 ```
 
-Deployment will take between 5-10 min. 
+Estimated deployment time is 5-10 min. 
 
