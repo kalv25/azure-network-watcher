@@ -15,24 +15,35 @@ az provider register --namespace microsoft.devtestlab
 The following resources will be deployed in your subscription under the following resource groups:
 
 ### iac-ws6-hub-rg
-- Virtual Network (`iac-ws6-hub-vnet`) with two subnets
-- Two Network Security Groups (one per subnet)
-- Virtual machine
-- Bastion host
-- Log Analytics workspace
-- Storage Account for NSG flow logs (norwayeast)
-- Storage Account for NSG flow logs (westeurope)
-- Storage Account for NSG flow logs (northeurope)
+| Resource name | Type | Location |
+|---------------|------|----------|
+| iac-ws6-hub-vnet | Virtual Network | norwayeast |
+| bastion-snet | Subnet | norwayeast |
+| workload-snet | Subnet | norwayeast |
+| iac-ws6-hub-vnet-bastion-nsg | Network Security Group | norwayeast |
+| iac-ws6-hub-vnet-workload-nsg | Network Security Group | norwayeast |
+| hubVm | Virtual Machine | norwayeast |
+| norwayeast... | Storage Account | norwayeast |
+| westeurope... | Storage Account | westeurope |
+| northeurope... | Storage Account | northeurope |
+| iac-ws6-...-law | Log Analytics Workspace | northeurope |
+
 
 ### iac-ws6-spoke1-rg
-- Virtual Network (`iac-ws6-spoke1-vnet`) with one subnet
-- Two Network Security Group 
-- Virtual machine
+| Resource name | Type | Location |
+|---------------|------|----------|
+| iac-ws6-spoke1-vnet | Virtual Network | westeurope |
+| workload-snet | Subnet | westeurope |
+| iac-ws6-spoke1-vnet-nsg | Network Security Group | westeurope |
+| spoke1Vm | Virtual Machine | westeurope |
 
 ### iac-ws6-spoke2-rg
-- Virtual Network (`iac-ws6-spoke2-vnet`) with one subnet
-- Two Network Security Group 
-- Virtual machine
+| Resource name | Type | Location |
+|---------------|------|----------|
+| iac-ws6-spoke2-vnet | Virtual Network | northeurope |
+| workload-snet | Subnet | northeurope |
+| iac-ws6-spoke2-vnet-nsg | Network Security Group | northeurope |
+| spoke2Vm | Virtual Machine | northeurope |
 
 ## The network topology
 
