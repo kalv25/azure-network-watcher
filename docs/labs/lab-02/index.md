@@ -8,7 +8,7 @@ Let's enable Network Watcher in `westeurope` region using Azure Portal.
 Navigate to [Network Watcher blade](https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/overview).
 
 !!! info "Note"
-    It's very likely that Network Watcher is already enabled in all three regions in your subscription. If that's the case, you should see all three instances for `norwayeast`, `westeurope` and `northeurope`. 
+    It's very likely that Network Watcher is already enabled in all three regions in your subscription. If that's the case, you should see all three instances of Network Watcher for `norwayeast`, `westeurope` and `northeurope`. 
 
 ![00](../../assets/images/lab-02/nw.png)
 
