@@ -91,7 +91,7 @@ Let's clone lab repo and deploy the environment.
     - Contains a special character
     - Control characters are not allowed
 
-For example, `FooBar123!` is a valid password :)
+For example, `Foobar123!` is a valid password :)
 
 ```powershell
 # Clone the repository to your local machine:
