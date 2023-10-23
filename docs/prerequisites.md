@@ -86,3 +86,11 @@ Download and install [Wireshark](https://www.wireshark.org/download.html) or use
 ```powershell
 winget install -e --id WiresharkFoundation.Wireshark
 ```
+
+## Azure Storage Explorer
+
+Download and install [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer) or use `winget` (Windows only)
+
+```powershell
+winget install --id=Microsoft.Azure.StorageExplorer  -e
+```

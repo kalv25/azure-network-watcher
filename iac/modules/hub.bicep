@@ -240,7 +240,7 @@ resource resBastionPublicIpAddress 'Microsoft.Network/publicIPAddresses@2023-04-
   name: varBastionPublicIpAddressName
   location: parLocation
   sku: {
-    name: 'Standard'
+    name: 'Basic'
   }
   properties: {
     publicIPAllocationMethod: 'Static'
