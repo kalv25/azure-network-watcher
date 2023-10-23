@@ -34,7 +34,7 @@ The following resources will be deployed in your subscription under the followin
 - Two Network Security Group 
 - Virtual machine
 
-## The network topology will look as follow:
+## The network topology
 
 ![01](../../assets/images/lab-01/hub-spoke.png)
 
