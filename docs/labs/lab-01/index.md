@@ -18,7 +18,7 @@ The following resources will be deployed in your subscription under the followin
 | Resource name | Type | Location |
 |---------------|------|----------|
 | iac-ws6-hub-vnet | Virtual Network | norwayeast |
-| bastion-snet | Subnet | norwayeast |
+| AzureBastionSubnet | Subnet | norwayeast |
 | workload-snet | Subnet | norwayeast |
 | iac-ws6-hub-vnet-bastion-nsg | Network Security Group | norwayeast |
 | iac-ws6-hub-vnet-workload-nsg | Network Security Group | norwayeast |
@@ -53,7 +53,7 @@ Here is Virtual Networks Address Space and Subnets configuration:
 
 | Vnet | subnet | IP range | Location |
 |------|----------| --------|----------|
-| iac-ws6-hub-vnet (10.10.0.0/25) | bastion-snet | 10.10.0.0/26 | norwayeast |
+| iac-ws6-hub-vnet (10.10.0.0/25) | AzureBastionSubnet | 10.10.0.0/26 | norwayeast |
 | iac-ws6-hub-vnet (10.10.0.0/26) | workload-snet | 10.10.0.64/26 | norwayeast |
 | iac-ws6-spoke1-vnet (10.10.0.128/26) | workload-snet | 10.10.0.128/26 | westeurope |
 | iac-ws6-spoke2-vnet (10.10.0.192/26) | workload-snet | 10.10.0.192/26 | northeurope |      
