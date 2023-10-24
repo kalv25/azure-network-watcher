@@ -11,7 +11,7 @@ This is level 200 workshop that covers different aspects of working with [Azure 
 - How to log network traffic
 - How to capture and analyze packets
 
-and many more...
+and much more...
 
 Workshop is organized as a combination of theoretical blocks with slides and hand-on labs. Estimated time for workshop completion is between 3 and 4 hours.
 
@@ -20,7 +20,13 @@ Workshop is organized as a combination of theoretical blocks with slides and han
 - Welcome + practical information
 - Azure Network Watcher overview (slides)
 - [Lab-01](labs/lab-01/index.md) - Provision lab resources
-- [Lab-xx](labs/lab-xx/index.md) - Cleaning up resources
+- [Lab-02](labs/lab-02/index.md) - Enable Network Watcher
+- [Lab-03](labs/lab-03/index.md) - Use IP flow verify and NSG diagnostics to troubleshoot a VM network traffic filter problem
+- [Lab-04](labs/lab-04/index.md) - Log network traffic with Network Security Group flow logs
+- [Lab-05](labs/lab-05/index.md) - Network Packet Capture with Network Watcher and Wireshark
+- [Lab-06](labs/lab-06/index.md) - Connection monitor
+- [Lab-07](labs/lab-07/index.md) - Working with Traffic analytics
+- [Lab-08](labs/lab-xx/index.md) - Cleaning up resources
 
 ## Prerequisites
 
