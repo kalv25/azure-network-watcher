@@ -134,7 +134,7 @@ Then navigate to the folder with current date and hour. You should see something
 
 Download the `PT1H.json` file and open it in your favorite text editor. 
 Search for `10.10.0.132` IP address that we used to generate traffic from `hubVm`.
-The following example is a section taken from the my PT1H.json file, which shows a flows where `10.10.0.132` was part of.
+The following example is a section taken from my PT1H.json file, which shows a flows where `10.10.0.132` was part of.
 
 ```json
 {
@@ -166,6 +166,7 @@ The following example is a section taken from the my PT1H.json file, which shows
     }
 }
 ```
+
 The comma-separated information for `flowTuples` is as follows:
 
 | Example data | What data represents| Description |
@@ -184,7 +185,7 @@ From here we know that traffic was blocked and it was blocked by the `UserRule_D
 
 ## Task #4 - allow outbound HTTP traffic from `hubVm` to `spoke1Vm`
 
-Add new outbound rule to `iac-ws6-hub-vnet-workload-nsg` NSG rule that allows TCP traffic at port 80 from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
+We need to allow outbound HTTP traffic at `workload-snet`. Add new outbound rule to `iac-ws6-hub-vnet-workload-nsg` NSG rule that allows TCP traffic at port 80 from `iac-ws6-hub-vnet` to `iac-ws6-spoke1-vnet`.
 
 ![00](../../assets/images/lab-04/hub-nsg-1.png)
 
@@ -200,7 +201,7 @@ Fill in the following parameters:
 | Priority | `200` |
 | Name | `allow-http-outbound` |
 
-When filled, click on `Add`.
+When filled, click on `Add`. It might take up to 1 minute before new rule will be applied.
 
 Go back to SSH session at `hubVm` and try to call `spoke1Vm` again:
 
@@ -215,7 +216,7 @@ We still get timeout. Let's check NSG flow logs of `iac-ws6-hub-vnet-workload-ns
 "1697872527,10.10.0.68,10.10.0.132,36852,80,T,O,A,B,,,,"
 ```
 
-As you can see, the action is now `A` which stands for `allowed`. That means that connection is now allowed, but it's still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
+As you can see, the action is now `A` which stands for `allowed`. That means that connection is now allowed, but it still fails. Let's check NSG flow logs of the receiving end - `iac-ws6-spoke1-vnet-nsg`.
 
 ## Task #5 - check NSG flow logs of `iac-ws6-spoke1-vnet-nsg` network security group
 
@@ -246,10 +247,10 @@ Fill in the following parameters:
 | Destination | `10.10.0.128/26` - iac-ws6-spoke1-vnet |
 | Source | `HTTP` |
 | Action | `Allow` |
-| Priority | `200` |
+| Priority | `300` |
 | Name | `allow-http-inbound` |
 
-When filled, click on `Add`.
+When filled, click on `Add`. It might take up to 1 minute before new rule will be applied.
 
 Go back to SSH session at `hubVm` and try to call `spoke1Vm` again:
 
