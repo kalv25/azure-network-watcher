@@ -28,11 +28,17 @@ At the `Add test group details` page, enter `TG1` as a test group name and click
 
 At the `Add sources->Azure endpoints` tab, select `hubVm` as a source endpoint and click on `Add endpoints`. 
 
+!!! info "Note"
+    Make sure that you select Virtual Machine, not Virtual Network!
+
 At the `Add test group details` page click on `Add destinations`. 
 
 ![00](../../assets/images/lab-06/cm3.png)
 
 At the `Add destinations->Azure endpoints` tab, select `spoke1Vm` and `spoke2Vm` as a destination endpoints and click on `Add endpoints`.
+
+!!! info "Note"
+    Make sure that you select Virtual Machine, not Virtual Network!
 
 ![00](../../assets/images/lab-06/cm4.png)
 
