@@ -43,7 +43,7 @@ Fill in the following information:
 | Target instance  | `spoke1Vm` |
 | Packet capture name  | `spoke1Vm` |
 | Capture location | `Storage account` |
-| Storage accounts | Choose of your storage accounts  |
+| Storage accounts | Choose one of your storage accounts, for example, one that starts with `westeurope...`  |
 | Time limit (seconds) | 300 |
 
 Click on `Start packet capture`.
@@ -89,6 +89,7 @@ Now, let's filter packets only to traffic between `hubVm (10.10.0.68)` and `spok
 ```txt
 ip.addr eq 10.10.0.68 and ip.addr eq 10.10.0.132 and tcp.port eq 80
 ```	
+
 ![00](../../assets/images/lab-05/wireshark-2.png)
 
 
