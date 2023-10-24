@@ -15,7 +15,7 @@ and much more...
 
 Workshop is organized as a combination of theoretical blocks with slides and hand-on labs. Estimated time for workshop completion is between 3 and 4 hours.
 
-## Agenda (Work In Progress)
+## Agenda
 
 - Welcome + practical information
 - Azure Network Watcher overview (slides)
