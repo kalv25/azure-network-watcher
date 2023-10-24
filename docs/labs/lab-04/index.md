@@ -26,7 +26,7 @@ At the `Analytics` tab:
 - select `Flow Logs Version` to `Version 2`
 - enable Traffic Analytics
 - set `Traffic Analytics processing interval` to every 10 min
-- select `iac-ws6-.....-log` as `Log Analytics Workspace`  
+- select `iac-ws6-.....-law` as `Log Analytics Workspace`  
 
 When filled, click on `Review + create` and then on `Create`
 
@@ -121,10 +121,10 @@ At the `Azure Storage Explorer`, navigate to `Storage Accounts` and select stora
 NSG log files are written to a folder hierarchy that follows the following naming convention:
 
 ```txt
-https://{storageAccountName}.blob.core.windows.net/insights-logs-networksecuritygroupflowevent/resourceId=/SUBSCRIPTIONS/{subscriptionID}/RESOURCEGROUPS/{resourceGroupName}/PROVIDERS/MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/{networSecurityGroupName}/y={year}/m={month}/d={day}/h={hour}/m=00/macAddress={acAddress}/PT1H.json
+https://{storageAccountName}.blob.core.windows.net/insights-laws-networksecuritygroupflowevent/resourceId=/SUBSCRIPTIONS/{subscriptionID}/RESOURCEGROUPS/{resourceGroupName}/PROVIDERS/MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/{networSecurityGroupName}/y={year}/m={month}/d={day}/h={hour}/m=00/macAddress={acAddress}/PT1H.json
 ```
 
-Select `Blob Containers->insights-logs-networksecuritygroupflowevent` and navigate the folder hierarchy at the right side until you get to the PT1H.json file (just double click on the folders to navigate). At some point, you will get to the folder with two NSG names. Choose NSG called `iac-ws6-hub-vnet-workload-nsg`. 
+Select `Blob Containers->insights-laws-networksecuritygroupflowevent` and navigate the folder hierarchy at the right side until you get to the PT1H.json file (just double click on the folders to navigate). At some point, you will get to the folder with two NSG names. Choose NSG called `iac-ws6-hub-vnet-workload-nsg`. 
 
 ![00](../../assets/images/lab-04/saexplorer-1.png)
 
