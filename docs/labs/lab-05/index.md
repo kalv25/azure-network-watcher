@@ -22,7 +22,7 @@ watch -n 1 curl -s http://10.10.0.132
 
 !!! info "Note"
     A virtual machine where you want to capture packets, [should have the following outbound TCP connectivity](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-portal#prerequisites):
-    
+
     - 443 (HTTPS) to Azure Storage
     - 80 to 169.254.169.254
     - 8037 to 168.63.129.16
@@ -46,17 +46,7 @@ Fill in the following information:
 | Storage accounts | Choose of your storage accounts  |
 | Time limit (seconds) | 300 |
 
-At the filtering add the following filter:
-
-| Parameter | Value |
-|---|---|
-| Protocol  | `TCP` |
-| Local IP address | `10.10.0.68` |
-| Local port | Keep it empty |
-| Remote IP address | `10.10.0.132` |
-| Remote port | `80` |
-
-Click `Add filter criteria` and then click on `Start packet capture`.
+Click on `Start packet capture`.
 
 It will first deploy `AzureWatcherExtension` to the VM (if oen hasn't been deployed yet) and then start the capture session.
 
@@ -100,7 +90,6 @@ Now, let's filter packets only to traffic between `hubVm (10.10.0.68)` and `spok
 ip.addr eq 10.10.0.68 and ip.addr eq 10.10.0.132 and tcp.port eq 80
 ```	
 ![00](../../assets/images/lab-05/wireshark-2.png)
-
 
 
 ## Links
