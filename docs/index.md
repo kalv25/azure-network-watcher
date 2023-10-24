@@ -26,7 +26,7 @@ Workshop is organized as a combination of theoretical blocks with slides and han
 - [Lab-05](labs/lab-05/index.md) - Network Packet Capture with Network Watcher and Wireshark
 - [Lab-06](labs/lab-06/index.md) - Connection monitor
 - [Lab-07](labs/lab-07/index.md) - Working with Traffic analytics
-- [Lab-08](labs/lab-xx/index.md) - Cleaning up resources
+- [Lab-08](labs/lab-08/index.md) - Cleaning up resources
 
 ## Prerequisites
 
