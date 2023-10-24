@@ -25,6 +25,7 @@ Workshop is organized as a combination of theoretical blocks with slides and han
 - [Lab-04](labs/lab-04/index.md) - Log network traffic with Network Security Group flow logs
 - [Lab-05](labs/lab-05/index.md) - Network Packet Capture with Network Watcher and Wireshark
 - [Lab-06](labs/lab-06/index.md) - Connection monitor
+- [Lab-07](labs/lab-07/index.md) - Working with Traffic analytics
 - [Lab-08](labs/lab-xx/index.md) - Cleaning up resources
 
 ## Prerequisites
