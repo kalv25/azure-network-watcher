@@ -1,4 +1,4 @@
-# lab-xx - cleaning up resources
+# lab-08 - cleaning up resources
 
 This is the most important part of the workshop. We need to clean up all resources that we provisioned during the workshop to avoid unexpected bills.
 
