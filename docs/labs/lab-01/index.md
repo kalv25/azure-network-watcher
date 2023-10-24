@@ -98,7 +98,7 @@ For example, `Foobar123!` is a valid password :)
 git clone https://github.com/Infrastructure-AsCode/azure-network-watcher
 
 # Navigate to iac folder
-cd cd .\azure-network-watcher\iac
+cd .\azure-network-watcher\iac
 
 # Deploy the environment
 ./deploy.ps1
