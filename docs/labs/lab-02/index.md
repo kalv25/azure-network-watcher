@@ -13,7 +13,7 @@ Navigate to [Network Watcher blade](https://portal.azure.com/#view/Microsoft_Azu
 ![00](../../assets/images/lab-02/nw.png)
 
 !!! info "Note"
-  If all Network Watcher instances are enabled, you can skip this lab!
+    If all Network Watcher instances are enabled, you can skip this lab!
 
 Otherwise, let's enable it. From Overview blade, click on `+ Add` button. Select your Subscription, select `West Europe` as a region and then Click on `Add`.
 
