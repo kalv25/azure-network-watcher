@@ -83,7 +83,7 @@ Here is Virtual Networks Address Space and Subnets configuration:
 | Vnet | subnet | IP range | Location |
 |------|----------| --------|----------|
 | iac-ws6-hub-vnet (10.10.0.0/25) | AzureBastionSubnet | 10.10.0.0/26 | norwayeast |
-| iac-ws6-hub-vnet (10.10.0.0/26) | workload-snet | 10.10.0.64/26 | norwayeast |
+| iac-ws6-hub-vnet (10.10.0.0/25) | workload-snet | 10.10.0.64/26 | norwayeast |
 | iac-ws6-spoke1-vnet (10.10.0.128/26) | workload-snet | 10.10.0.128/26 | westeurope |
 | iac-ws6-spoke2-vnet (10.10.0.192/26) | workload-snet | 10.10.0.192/26 | northeurope |      
 

@@ -22,6 +22,7 @@ watch -n 1 curl -s http://10.10.0.132
 
 !!! info "Note"
     A virtual machine where you want to capture packets, [should have the following outbound TCP connectivity](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-portal#prerequisites):
+    
     - 443 (HTTPS) to Azure Storage
     - 80 to 169.254.169.254
     - 8037 to 168.63.129.16
