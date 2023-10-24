@@ -12,6 +12,35 @@ az provider register --namespace Microsoft.Compute
 az provider register --namespace microsoft.devtestlab
 ```
 
+## Task #1 - Provision lab environment
+
+Let's clone lab repo and deploy the environment.  
+
+!!! info "Note"
+    The deployment script will ask you to enter the Virtual Machines admin password. Note that supplied password must be between 8-123 characters long and must satisfy `at least 3` of password complexity requirements from the following:
+
+    - Contains an uppercase character
+    - Contains a lowercase character
+    - Contains a numeric digit
+    - Contains a special character
+    - Control characters are not allowed
+
+For example, `Foobar123!` is a valid password :)
+
+```powershell
+# Clone the repository to your local machine:
+git clone https://github.com/Infrastructure-AsCode/azure-network-watcher
+
+# Navigate to iac folder
+cd .\azure-network-watcher\iac
+
+# Deploy the environment
+./deploy.ps1
+```
+
+Estimated deployment time is 5-10 min. 
+
+
 The following resources will be deployed in your subscription under the following resource groups:
 
 ### iac-ws6-hub-rg
@@ -77,32 +106,4 @@ As always, we follow some basic conventions:
 var varUniqueString = uniqueString(subscription().id)
 name: '${parPrefix}-${uniqueString(resourceGroup().id)}-law'
 ```
-
-## Task #1 - Provision lab environment
-
-Let's clone lab repo and deploy the environment.  
-
-!!! info "Note"
-    The deployment script will ask you to enter the Virtual Machines admin password. Note that supplied password must be between 8-123 characters long and must satisfy `at least 3` of password complexity requirements from the following:
-
-    - Contains an uppercase character
-    - Contains a lowercase character
-    - Contains a numeric digit
-    - Contains a special character
-    - Control characters are not allowed
-
-For example, `Foobar123!` is a valid password :)
-
-```powershell
-# Clone the repository to your local machine:
-git clone https://github.com/Infrastructure-AsCode/azure-network-watcher
-
-# Navigate to iac folder
-cd .\azure-network-watcher\iac
-
-# Deploy the environment
-./deploy.ps1
-```
-
-Estimated deployment time is 5-10 min. 
 
