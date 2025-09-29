@@ -24,7 +24,7 @@ var varVmImage = {
   }
 }
 
-resource resNic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
+resource resNic 'Microsoft.Network/networkInterfaces@2024-07-01' = {
   name: '${parVmName}-nic'
   location: parLocation
   properties: {
@@ -42,7 +42,7 @@ resource resNic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   }
 }
 
-resource resVm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource resVm 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   name: parVmName
   location: parLocation
   properties: {
@@ -83,7 +83,7 @@ resource resVm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   }
 }
 
-resource vmFEIISEnabled 'Microsoft.Compute/virtualMachines/runCommands@2023-07-01' = if (parOsType == 'windows') {
+resource vmFEIISEnabled 'Microsoft.Compute/virtualMachines/runCommands@2024-11-01' = if (parOsType == 'windows') {
   name: 'enable-iis-at-${parVmName}'
   location: parLocation
   parent: resVm

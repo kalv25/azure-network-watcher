@@ -5,7 +5,7 @@ param parBastionSubnetAddressPrefix string
 param parWorkloadSubnetAddressPrefix string
 @description('Azure Storage Account Name')
 
-resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   name: '${varVirtualNetworkName}-bastion-nsg'
   location: parLocation
   properties: {
@@ -154,7 +154,7 @@ resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
 }
 
 var varVirtualNetworkName = '${parPrefix}-hub-vnet'
-resource resWorkloadNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+resource resWorkloadNsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   name: '${varVirtualNetworkName}-workload-nsg'
   location: parLocation
   properties: {
@@ -199,7 +199,7 @@ resource resWorkloadNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   }
 }
 
-resource resVnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
+resource resVnet 'Microsoft.Network/virtualNetworks@2024-07-01' = {
   name: varVirtualNetworkName
   location: parLocation
   properties: {
@@ -236,7 +236,7 @@ resource resVnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
 var varBastionHostName = '${parPrefix}-bas'
 var varBastionPublicIpAddressName = '${varBastionHostName}-pip'
 
-resource resBastionPublicIpAddress 'Microsoft.Network/publicIPAddresses@2023-04-01' = {
+resource resBastionPublicIpAddress 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
   name: varBastionPublicIpAddressName
   location: parLocation
   sku: {
@@ -247,7 +247,7 @@ resource resBastionPublicIpAddress 'Microsoft.Network/publicIPAddresses@2023-04-
   }
 }
 
-resource resBastionHost 'Microsoft.Network/bastionHosts@2023-04-01' = {
+resource resBastionHost 'Microsoft.Network/bastionHosts@2024-07-01' = {
   name: varBastionHostName
   location: parLocation
   properties: {
@@ -268,7 +268,7 @@ resource resBastionHost 'Microsoft.Network/bastionHosts@2023-04-01' = {
 }
 
 
-resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+resource resLogAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2025-02-01' = {
   name: '${parPrefix}-${uniqueString(resourceGroup().id)}-law'
   location: parLocation
   properties: {

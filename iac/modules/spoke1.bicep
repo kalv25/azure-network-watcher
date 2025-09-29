@@ -4,7 +4,7 @@ param parWorkloadName string
 param parVnetAddressPrefix string
 
 var varVirtualNetworkName = '${parPrefix}-${parWorkloadName}-vnet'
-resource resNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+resource resNsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   name: '${varVirtualNetworkName}-nsg'
   location: parLocation
   properties: {
@@ -91,7 +91,7 @@ resource resNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   }
 }
 
-resource resVnet 'Microsoft.Network/virtualNetworks@2022-11-01' = {
+resource resVnet 'Microsoft.Network/virtualNetworks@2024-07-01' = {
   name: varVirtualNetworkName
   location: parLocation
   properties: {

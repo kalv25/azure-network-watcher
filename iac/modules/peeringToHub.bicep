@@ -2,11 +2,11 @@ param parFromVNetName string
 param parFromVnetId string
 param parToVNetName string
 
-resource resHubVnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {
+resource resHubVnet 'Microsoft.Network/virtualNetworks@2024-07-01' existing = {
   name: parToVNetName  
 }
 
-resource resPeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2023-04-01' = {
+resource resPeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2024-07-01' = {
   name: '${parToVNetName}-${parFromVNetName}'
   parent: resHubVnet
   properties: {

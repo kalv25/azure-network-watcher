@@ -5,7 +5,7 @@ param parWorkspaceResourceId string
 param parNetworkWatcherName string
 param parFlowlogName string 
 
-resource resFlowlogBastionNsg 'Microsoft.Network/networkWatchers/flowLogs@2023-05-01' = {
+resource resFlowlogBastionNsg 'Microsoft.Network/networkWatchers/flowLogs@2024-07-01' = {
   name: '${parNetworkWatcherName}/${parFlowlogName}'
   location: parLocation
   properties: {

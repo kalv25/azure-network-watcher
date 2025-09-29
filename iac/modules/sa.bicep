@@ -1,7 +1,7 @@
 param parLocation string
 param parStorageAccountName string
 
-resource resStorageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+resource resStorageAccount 'Microsoft.Storage/storageAccounts@2025-01-01' = {
   name: parStorageAccountName
   location: parLocation
   sku: {

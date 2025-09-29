@@ -20,7 +20,7 @@ var varTags = {
 }
 
 var varHubResourceGroupName = '${parPrefix}-hub-rg'
-resource resHubResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resHubResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: varHubResourceGroupName
   location: parHubLocation
   tags: varTags
@@ -66,7 +66,7 @@ module modNSGFlowLogsNorthEurope 'modules/sa.bicep' = {
 }
 
 param parNetworkWatcherResourceGroupName string = 'NetworkWatcherRG'
-resource resNetworkWatcherResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resNetworkWatcherResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: parNetworkWatcherResourceGroupName
   location: parHubLocation
   tags: varTags
@@ -110,7 +110,7 @@ module modNsgFlowLogHubWorkload 'modules/flowlogs.bicep' = {
 
 var varSpoke1WorkloadName = 'spoke1'
 var varSpoke1ResourceGroupName = '${parPrefix}-${varSpoke1WorkloadName}-rg'
-resource resSpoke1ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resSpoke1ResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: varSpoke1ResourceGroupName
   location: parSpoke1Location
   tags: varTags
@@ -129,7 +129,7 @@ module modSpoke1 'modules/spoke1.bicep' = {
 
 var varSpoke2WorkloadName = 'spoke2'
 var varSpoke2ResourceGroupName = '${parPrefix}-${varSpoke2WorkloadName}-rg'
-resource resSpoke2ResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resSpoke2ResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: varSpoke2ResourceGroupName
   location: parSpoke2Location
   tags: varTags
